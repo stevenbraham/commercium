@@ -11,7 +11,6 @@ namespace commercium\controllers;
 
 use framework\components\base\SessionManagement;
 use framework\components\Controller;
-use framework\traits\CanAccessCore;
 
 class MainController extends Controller {
     public function actionIndex() {

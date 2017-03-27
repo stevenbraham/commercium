@@ -9,27 +9,28 @@
 namespace commercium\controllers;
 
 
+use commercium\repositories\Users;
+use framework\components\base\Helpers;
+use framework\components\base\SessionManagement;
 use framework\components\Controller;
-use framework\traits\CanAccessCore;
 
 /**
  * Responsible for login users in
  * @package commercium\controllers
  */
 class LoginController extends Controller {
-    use CanAccessCore;
 
     public function actionIndex() {
         return $this->render("index");
     }
 
     public function actionLogin() {
-        $email = $this->getCore()->helpers->getInputParameter("email", "post");
-        $password = $this->getCore()->helpers->getInputParameter("password", "post");
+        $email = Helpers::getInputParameter("email", "post");
+        $password = Helpers::getInputParameter("password", "post");
         if (!empty($email) && !empty($password)) {
-            $user = $this->getCore()->repositories->users->findByAttribute("email", $email);
+            $user = Users::findByAttribute("email", $email);
             if (!empty($user)) {
-                if ($this->getCore()->session->tryLogin($user, $password)) {
+                if (SessionManagement::tryLogin($user, $password)) {
                     return $this->redirectTo("main");
                 }
             }

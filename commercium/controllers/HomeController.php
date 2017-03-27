@@ -9,13 +9,12 @@
 
 namespace commercium\controllers;
 
+use framework\components\base\SessionManagement;
 use framework\components\Controller;
-use framework\traits\CanAccessCore;
 
 class HomeController extends Controller {
-    use CanAccessCore;
     public function actionIndex() {
         //check if current user is logged in
-        return $this->getCore()->session->isLoggedIn() ? $this->redirectTo("main") : $this->redirectTo('login');
+        return SessionManagement::isLoggedIn() ? $this->redirectTo("main") : $this->redirectTo('login');
     }
 }
