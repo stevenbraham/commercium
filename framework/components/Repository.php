@@ -21,7 +21,6 @@ abstract class Repository implements \framework\contracts\Repository {
     use CanAccessCore;
 
     public function all() {
-        $modelName = $this->getModel();
         $returnValues = [];
         //prepare and execute statement
         $query = $this->getCore()->database->prepare("select * from " . $this->getTable());
@@ -32,12 +31,6 @@ abstract class Repository implements \framework\contracts\Repository {
         }
         return $returnValues;
     }
-
-    /**
-     * The model class used to display data
-     * @return string
-     */
-    public abstract function getModel();
 
     /**
      * The table were this instance is stored
@@ -55,12 +48,15 @@ abstract class Repository implements \framework\contracts\Repository {
         return new $modelName($params);
     }
 
+    /**
+     * The model class used to display data
+     * @return string
+     */
+    public abstract function getModel();
+
     public function findOrFail($id) {
         $object = $this->findById($id);
-        if (empty($object)) {
-            throw new \Exception("Object not found");
-        }
-        return $object;
+        return !empty($object) ? $object : $this->getCore()->helpers->throwHttpError(404);
     }
 
     public function findById($id) {

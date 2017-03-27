@@ -16,5 +16,4 @@ require_once "vendor/autoload.php";
 //boot framework
 require_once "framework/Setup.php";
 $framework = Setup::boot();
-var_dump($framework->repositories->users->all());
-var_dump($framework->repositories->users->findOrFail(1));
+$framework->router->parseRequest();

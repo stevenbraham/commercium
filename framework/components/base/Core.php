@@ -25,5 +25,7 @@ final class Core {
         //load $repositories
         $this->repositories = new Repositories();
         $this->helpers = new Helpers();
+        $this->router = new Router();
+        define("FRAMEWORK_CORE_LOADED", true);
     }
 }
