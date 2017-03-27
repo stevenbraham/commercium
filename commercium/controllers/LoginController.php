@@ -39,6 +39,8 @@ class LoginController extends Controller {
     }
 
     public function actionLogout() {
-
+        session_unset();
+        session_destroy();
+        return $this->redirectTo("home");
     }
 }
