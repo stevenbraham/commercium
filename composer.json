@@ -1,0 +1,14 @@
+{
+    "name": "stevenbraham/commercium",
+    "description": "School project for a fake stock trading application",
+    "type": "project",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Steven Braham",
+            "email": "steven@braham.biz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
