@@ -11,9 +11,9 @@ class Core {
     /**
      * @var Database
      */
-    protected $database;
-    protected $router;
-    protected $util;
+    public $database;
+    public $router;
+    public $util;
 
     public function __construct() {
         //populate other classes
