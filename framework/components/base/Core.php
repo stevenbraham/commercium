@@ -14,6 +14,7 @@ final class Core {
     public $database;
     public $router;
     public $helpers;
+    public $session;
     /**
      * @var Repositories
      */
@@ -26,6 +27,22 @@ final class Core {
         $this->repositories = new Repositories();
         $this->helpers = new Helpers();
         $this->router = new Router();
+        $this->session = new SessionManagement();
         define("FRAMEWORK_CORE_LOADED", true);
+    }
+
+    /**
+     * Returns an reference to the global core object
+     * @return Core
+     * @throws \Exception
+     */
+    public static function getInstance() {
+        global $framework;
+        if ($framework instanceof Core) {
+            //$framework is valid core instance
+            return $framework;
+        } else {
+            throw new \Exception("No valid core instance found");
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace framework\components;
 
 abstract class Model {
 
+    public $id;
     /**
      * Model constructor.
      * @param $params

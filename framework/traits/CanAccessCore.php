@@ -22,13 +22,7 @@ trait CanAccessCore {
      * @return Core
      * @throws \Exception
      */
-    private function &getCore() {
-        global $framework;
-        if ($framework instanceof Core) {
-            //$framework is valid core instance
-            return $framework;
-        } else {
-            throw new \Exception("No valid core instance found");
-        }
+    private function getCore() {
+        return Core::getInstance();
     }
 }
