@@ -15,12 +15,11 @@ use framework\traits\CanAccessCore;
  * @package framework\components\base
  */
 class Router {
-    use CanAccessCore;
 
-    public function parseRequest() {
+    public static function parseRequest() {
         //first I retrieve the page the person wants to view, the class and method are prepended to prevent someone from randomly executing classes
-        $controllerName = strtolower($this->getCore()->helpers->getInputParameter('controller', 'get', 'home')) . "Controller";
-        $actionName = "action" . ucfirst($this->getCore()->helpers->getInputParameter('action', 'get', 'index'));
+        $controllerName = strtolower(Helpers::getInputParameter('controller', 'get', 'home')) . "Controller";
+        $actionName = "action" . ucfirst(Helpers::getInputParameter('action', 'get', 'index'));
         //check if a valid controller exists
         $controllerClassName = "commercium\controllers\\" . $controllerName;
         if (class_exists($controllerClassName)) {
@@ -32,7 +31,7 @@ class Router {
             }
         }
         //something went wrong if this line is reached
-        $this->getCore()->helpers->throwHttpError(404);
+        Helpers::throwHttpError(404);
     }
 
 }

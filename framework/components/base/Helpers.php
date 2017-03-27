@@ -12,15 +12,13 @@ namespace framework\components\base;
 use framework\traits\CanAccessCore;
 
 class Helpers {
-    use CanAccessCore;
-
     /**
      * This functions aborts all execution
      * and throws an http error
      * @param int $httpCode
      * @param string $message optional message you want to display
      */
-    public function throwHttpError($httpCode, $message = "") {
+    public static function throwHttpError($httpCode, $message = "") {
         http_response_code($httpCode);
         die($message);
     }
@@ -35,7 +33,7 @@ class Helpers {
      * @throws \Exception
      * @return string
      */
-    public function getInputParameter($name, $mode = "get", $default = "") {
+    public static function getInputParameter($name, $mode = "get", $default = "") {
         /**
          * Array with modes my function can handle
          */
@@ -50,5 +48,15 @@ class Helpers {
         $value = filter_input($supportedModes[$mode], $name);
         //check if value from post/get is valid, otherwise return $default
         return !empty($value) ? $value : $default; //short hand if statement for cleaner code
+    }
+
+    /**
+     * Provides a shorter route to PDO::quote
+     * @param $string
+     * @see PDO::quote()
+     * @return string
+     */
+    public static function sanitizeForSQL($string) {
+        return Core::getInstance()->database->quote($string);
     }
 }

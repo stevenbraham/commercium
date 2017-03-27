@@ -8,6 +8,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+use framework\components\base\Router;
 use framework\Setup;
 
 session_start();
@@ -16,4 +17,4 @@ require_once "vendor/autoload.php";
 //boot framework
 require_once "framework/Setup.php";
 $framework = Setup::boot();
-$framework->router->parseRequest();
+Router::parseRequest();

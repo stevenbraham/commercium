@@ -15,7 +15,6 @@ use framework\traits\CanAccessCore;
  * @package framework\components
  */
 abstract class Controller {
-    use CanAccessCore;
 
     /**
      * Renders a file from a class views folder

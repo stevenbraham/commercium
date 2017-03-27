@@ -9,16 +9,16 @@ interface Repository {
     /**
      * @return array
      */
-    public function all();
+    public static function all();
 
-    public function findByAttribute($name, $value);
+    public static function findByAttribute($name, $value);
 
     /**
      * Finds an object by the primary key
      * @param $id
      * @return mixed
      */
-    public function findById($id);
+    public static function findById($id);
 
     /**
      * Same as the findById function but throws exception if the object can't be found
@@ -26,5 +26,5 @@ interface Repository {
      * @throws \Exception
      * @return mixed
      */
-    public function findOrFail($id);
+    public static function findOrFail($id);
 }

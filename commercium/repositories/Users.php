@@ -17,11 +17,11 @@ use framework\components\Repository;
  * @package commercium\repositories
  */
 class Users extends Repository {
-    public function getTable() {
+    public static function getTable() {
         return "users";
     }
 
-    public function getModel() {
+    public static function getModel() {
         return User::class;
     }
 }

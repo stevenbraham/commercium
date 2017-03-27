@@ -9,6 +9,7 @@
 namespace framework\components\base;
 
 use commercium\models\User;
+use commercium\repositories\Users;
 use framework\traits\CanAccessCore;
 
 /**
@@ -17,13 +18,11 @@ use framework\traits\CanAccessCore;
  */
 class SessionManagement {
 
-    use CanAccessCore;
-
     /**
      * Check if a valid logged in session exists
      * @return bool
      */
-    public function isLoggedIn() {
+    public static function isLoggedIn() {
         if (isset($_SESSION['loggedIn']) && isset($_SESSION['user'])) {
             if ($_SESSION['loggedIn'] === true) {
                 return true;
@@ -38,7 +37,7 @@ class SessionManagement {
      * @param string $password
      * @return bool
      */
-    public function tryLogin(User $user, $password) {
+    public static function tryLogin(User $user, $password) {
         if (password_verify($password, $user->password)) {
             //register user in session
             $_SESSION['user'] = $user->id;
@@ -53,8 +52,8 @@ class SessionManagement {
      * Gets current logged in user
      * @return User
      */
-    public function getUser() {
-        return $this->getCore()->repositories->users->findById($_SESSION['user']);
+    public static function getUser() {
+        return Users::findById($_SESSION['user']);
     }
 
 }
