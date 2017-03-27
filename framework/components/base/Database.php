@@ -6,13 +6,13 @@
  * Time: 14:06
  */
 
-namespace framework\components;
+namespace framework\components\base;
 
 /**
  * PDO instance that can connect to our database
  * @package framework\components
  */
-class Database extends \PDO {
+final class Database extends \PDO {
     /**
      * I simplified the constructor, it only requires host, username, password and db name
      * It generates its own dsn string

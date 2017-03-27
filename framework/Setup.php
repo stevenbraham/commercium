@@ -10,8 +10,7 @@
 namespace framework;
 
 use Dotenv\Dotenv;
-use framework\components\Core;
-use framework\contracts\Factory;
+use framework\components\base\Core;
 
 class Setup {
     /**
@@ -37,6 +36,13 @@ class Setup {
         foreach ($frameworkFiles as $frameworkFile) {
             if (file_exists($frameworkFile)) {
                 require_once $frameworkFile;
+            }
+        }
+        //load app files
+        $appFiles = glob('commercium/**/*.php');
+        foreach ($appFiles as $appFile) {
+            if (file_exists($appFile)) {
+                require_once $appFile;
             }
         }
         //create core object and populate it
