@@ -14,6 +14,10 @@ final class Core {
     public $database;
 
     public function __construct() {
+        if (defined("FRAMEWORK_CORE_LOADED")) {
+            //other core active
+            throw new \Exception("Core should be a singleton. Use Core::getInstance to get a Core object for your code.");
+        }
         $this->database = new Database(getenv("DB_HOST"), getenv("DB_USER"), getenv("DB_PASSWORD"), getenv("DB_NAME"));
         define("FRAMEWORK_CORE_LOADED", true);
     }

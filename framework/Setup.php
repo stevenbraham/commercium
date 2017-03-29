@@ -11,6 +11,8 @@ namespace framework;
 
 use Dotenv\Dotenv;
 use framework\components\base\Core;
+use framework\exceptions\setup\EnvFileMissingException;
+use framework\exceptions\setup\RequiredEnvVariableMissingException;
 
 class Setup {
     /**
@@ -29,8 +31,17 @@ class Setup {
             (new Dotenv(FRAMEWORK_BASE_PATH))->load();
         } else {
             //no env file found
-            throw new \Exception('env file missing');
+            throw new EnvFileMissingException();
         }
+        //check if env file is populated
+        $requiredEnvVariables = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'APP_URL'];
+        foreach ($requiredEnvVariables as $requiredEnvVariable) {
+            if (empty(getenv($requiredEnvVariable))) {
+                throw new RequiredEnvVariableMissingException($requiredEnvVariable);
+            }
+        }
+        //set protocol independent base url
+        define("FRAMEWORK_BASE_URL", str_replace(['https:', 'http:'], "", getenv("APP_URL")));
         //load other framework files
         $frameworkFiles = glob('framework/**/*.php');
         foreach ($frameworkFiles as $frameworkFile) {

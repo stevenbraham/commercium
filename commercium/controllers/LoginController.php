@@ -21,6 +21,7 @@ use framework\components\Controller;
 class LoginController extends Controller {
 
     public function actionIndex() {
+        $this->layoutParams['title'] = "Login";
         return $this->render("index");
     }
 

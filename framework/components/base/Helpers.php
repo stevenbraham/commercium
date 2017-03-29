@@ -59,4 +59,15 @@ class Helpers {
     public static function sanitizeForSQL($string) {
         return Core::getInstance()->database->quote($string);
     }
+
+    /**
+     * Gets an url for a local file prepend with the path
+     * of the directory where this app is hosted
+     * @param $path the path of the file
+     * @param bool $absolute prepend http://domain
+     * @return string
+     */
+    public static function getUrl($path, $absolute = false) {
+        return $absolute ? FRAMEWORK_BASE_URL . $path : str_replace("//" . $_SERVER['HTTP_HOST'], "", FRAMEWORK_BASE_URL) . $path;
+    }
 }

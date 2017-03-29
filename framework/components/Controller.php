@@ -17,6 +17,17 @@ use framework\traits\CanAccessCore;
 abstract class Controller {
 
     /**
+     * General params for the layout files
+     * Mainly meant for header files
+     * @var array
+     */
+    protected $layoutParams = [
+        'title' => '',
+        'language' => 'en',
+        'breadcrumbs' => [],
+    ];
+
+    /**
      * Renders a file from a class views folder
      * Will automatically append/prepend footer and header
      * @param string $viewName the file name without .php
