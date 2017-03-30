@@ -36,8 +36,8 @@ use framework\components\base\SessionManagement;
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><?= Html::a("/", "Home") ?></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><?= Html::a("/portfolio", "Portfolio") ?></li>
+                    <li><?= Html::a("/orders", "Orders") ?></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
