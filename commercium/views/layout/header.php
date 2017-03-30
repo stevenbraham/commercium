@@ -40,7 +40,7 @@ use framework\components\base\SessionManagement;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form method="post" action="<?= Helpers::getUrl('?controller=login&action=logout') ?>">
+                        <form method="post" action="<?= Helpers::getUrl('login/logout') ?>">
                             <button type="submit" class="btn btn-danger navbar-btn"><i class="fa fa-power-off"></i> Logout</button>
                         </form>
                     </li>

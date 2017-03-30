@@ -8,6 +8,7 @@
 
 namespace framework\components;
 
+use framework\components\base\Helpers;
 use framework\traits\CanAccessCore;
 
 /**
@@ -72,6 +73,6 @@ abstract class Controller {
      * @param string $action
      */
     public function redirectTo($controller, $action = "index") {
-        header('Location: index.php?' . http_build_query(['action' => $action, 'controller' => $controller]));
+        header('Location: ' . Helpers::getUrl($controller . "/" . $action));
     }
 }
