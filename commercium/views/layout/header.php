@@ -1,5 +1,6 @@
 <?php
 use framework\components\base\Helpers;
+use framework\components\base\Html;
 use framework\components\base\SessionManagement;
 
 /**
@@ -34,7 +35,7 @@ use framework\components\base\SessionManagement;
         <?php if (SessionManagement::isLoggedIn()) { ?>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li class="active"><?= Html::a("/", "Home") ?></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
