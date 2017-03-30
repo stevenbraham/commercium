@@ -45,7 +45,7 @@ class Helpers {
             //invalid mode used
             throw new \Exception("Unsupported mode used, please use 'post' or 'get'");
         }
-        $value = filter_input($supportedModes[$mode], $name);
+        $value = filter_input($supportedModes[$mode], $name, FILTER_SANITIZE_STRING);
         //check if value from post/get is valid, otherwise return $default
         return !empty($value) ? $value : $default; //short hand if statement for cleaner code
     }

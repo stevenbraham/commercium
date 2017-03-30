@@ -29,7 +29,7 @@ use framework\components\base\SessionManagement;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Commercium</a>
+            <a class="navbar-brand" href="<?= Helpers::getUrl('') ?>">Commercium</a>
         </div>
         <?php if (SessionManagement::isLoggedIn()) { ?>
             <div id="navbar" class="collapse navbar-collapse">
@@ -38,7 +38,14 @@ use framework\components\base\SessionManagement;
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-            </div><!--/.nav-collapse -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form method="post" action="<?= Helpers::getUrl('?controller=login&action=logout') ?>">
+                            <button type="submit" class="btn btn-danger navbar-btn"><i class="fa fa-power-off"></i> Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         <?php } ?>
     </div>
 </nav>

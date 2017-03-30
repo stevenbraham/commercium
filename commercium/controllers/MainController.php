@@ -17,6 +17,7 @@ class MainController extends Controller {
     use IsLoginProtected;
 
     public function actionIndex() {
+        $this->layoutParams['title'] = "Main";
         return $this->render("index", ['user' => SessionManagement::getUser()]);
     }
 }
