@@ -8,47 +8,53 @@ use framework\components\base\SessionManagement;
  */
 ?>
 <!DOCTYPE html>
-<html lang="<?= $this->layoutParams['language'] ?>">
+<html lang="<?= $layoutParams['language'] ?>">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Commercium: <?= $this->layoutParams['title'] ?></title>
+    <title>Commercium: <?= $layoutParams['title'] ?></title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="//bootswatch.com/sandstone/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="icon" href="<?= Helpers::getUrl('assets/images/favicon.png') ?>"/>
+    <?= Html::link('assets/css/style.css') ?>
+    <?= Html::link('assets/images/favicon.png', 'icon') ?>
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<?= Helpers::getUrl('') ?>">Commercium</a>
-        </div>
-        <?php if (SessionManagement::isLoggedIn()) { ?>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><?= Html::a("/", "Home") ?></li>
-                    <li><?= Html::a("/portfolio", "Portfolio") ?></li>
-                    <li><?= Html::a("/orders", "Orders") ?></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form method="post" action="<?= Helpers::getUrl('login/logout') ?>">
-                            <button type="submit" class="btn btn-danger navbar-btn"><i class="fa fa-power-off"></i> Logout</button>
-                        </form>
-                    </li>
-                </ul>
+<header>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?= Helpers::getUrl('') ?>">Commercium</a>
             </div>
-        <?php } ?>
-    </div>
-</nav>
-
-<div class="container">
+            <?php if (SessionManagement::isLoggedIn()) { ?>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><?= Html::a("/", "Home") ?></li>
+                        <li><?= Html::a("portfolio", "Portfolio") ?></li>
+                        <li><?= Html::a("orders", "Orders") ?></li>
+                        <li class="active"><?= Html::a("users", "User managament") ?></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <?= Html::openForm('login/logout') ?>
+                            <?= Html::a('users/view?id=' . SessionManagement::getUser()->id, SessionManagement::getUser()->firstname, 'btn btn-info navbar-btn') ?>
+                            <button type="submit" class="btn btn-danger navbar-btn"><i class="fa fa-power-off"></i> Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            <?php } ?>
+        </div>
+    </nav>
+    <nav class="navbar navbar-default navbar-static-top">
+        <h1><?= $layoutParams['title'] ?></h1>
+    </nav>
+</header>
+<main class="container">

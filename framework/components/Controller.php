@@ -53,6 +53,7 @@ abstract class Controller {
         }
         //explode params so the vars can be used normally in the views
         extract($params);
+        $layoutParams = $this->layoutParams;
         if ($return === true) {
             //use object buffer to catch the output of the require statements
             ob_start();

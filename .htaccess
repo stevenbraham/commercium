@@ -1,5 +1,4 @@
 RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule assets/* - [L]
 RewriteRule ^(.*)/(.*)$ index.php?controller=$1&action=$2 [NC,L,QSA]
 RewriteRule ^(.*)$ index.php?controller=$1&action=index [NC,L,QSA]

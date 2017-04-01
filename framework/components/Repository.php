@@ -20,16 +20,14 @@ use framework\traits\CanAccessCore;
  * @package framework\components
  */
 abstract class Repository implements \framework\contracts\Repository {
+    /**
+     * @return object[]
+     */
     public static function all() {
-        $returnValues = [];
         //prepare and execute statement
         $query = Core::getInstance()->database->prepare("select * from " . static::getTable());
         $query->execute();
-        //fill return values with desired objects
-        foreach ($query->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-            $returnValues[] = static::createModel($row);
-        }
-        return $returnValues;
+        return $query->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
     }
 
     /**
@@ -39,35 +37,37 @@ abstract class Repository implements \framework\contracts\Repository {
     public static abstract function getTable();
 
     /**
-     * Creates a new model and infuses it with data
-     * @param $params
-     * @return mixed
-     */
-    public static function createModel($params) {
-        $modelName = static::getModel();
-        return new $modelName($params);
-    }
-
-    /**
      * The model class used to display data
      * @return string
      */
     public static abstract function getModel();
 
+    /**
+     * @param $id
+     * @return object
+     */
     public static function findOrFail($id) {
         $object = static::findById($id);
-        return !empty($object) ? $object : Helpers::throwHttpError(404);
+        return !empty($object) ? $object : Helpers::throwHttpError(404, "Cant find object");
     }
 
+    /**
+     * @param $id
+     * @return object|null
+     */
     public static function findById($id) {
         return static::findByAttribute(static::getPrimaryKey(), $id);
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @return object|null
+     */
     public static function findByAttribute($name, $value) {
-        $query = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
+        $query = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value limit 1");
         $query->execute(['value' => $value]);
-        $result = $query->fetch(\PDO::FETCH_ASSOC);
-        return !empty($result) ? static::createModel($result) : null;
+        return $query->fetchObject(static::getModel());
     }
 
     /**
@@ -76,5 +76,16 @@ abstract class Repository implements \framework\contracts\Repository {
      */
     protected static function getPrimaryKey() {
         return "id";
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return object[]
+     */
+    public static function findAllByAttribute($name, $value) {
+        $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
+        $statement->execute(['value' => $value]);
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
     }
 }

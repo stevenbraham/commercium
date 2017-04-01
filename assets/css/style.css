@@ -1,0 +1,9 @@
+header > nav:first-child {
+    margin: 0;
+}
+
+header > nav:nth-child(2) > h1 {
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0;
+}

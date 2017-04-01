@@ -12,18 +12,20 @@ namespace framework\components;
 abstract class Model {
 
     public $id;
+
     /**
-     * Model constructor.
-     * @param $params
+     * Provides a factory like interface for creating objects of this particular modal
+     * @param array $attributes
+     * @return self
      */
-    public final function __construct($params) {
-        //fill our object with params added from the constructor array
-        $this->afterConstruct();
-        foreach ($params as $key => $value) {
+    public final static function create($attributes) {
+        $object = new static();
+        foreach ($attributes as $key => $value) {
             if (property_exists(static::class, $key)) {
-                $this->{$key} = $value;
+                $object->{$key} = $value;
             }
         }
+        return $object;
     }
 
     /**

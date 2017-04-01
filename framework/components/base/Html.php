@@ -17,22 +17,55 @@ class Html {
         return static::element("a", $label, ['href' => Helpers::getUrl($path), 'class' => $class]);
     }
 
-
     /**
      * Renders an html element
      * @param string $tag
      * @param string $content if empty a single block level element is returned
      * @param array $attributes
+     * @param bool $onlyOpen
      * @return string
      */
-    public static function element($tag, $content = "", $attributes = []) {
+    public static function element($tag, $content = "", $attributes = [], $onlyOpen = false) {
         $element = "<{$tag} ";
         foreach ($attributes as $attributeLabel => $attributeValue) {
             if (!empty($attributeValue)) {
                 $element .= $attributeLabel . '="' . $attributeValue . '" ';
             }
         }
-        $element .= !empty($content) ? ">{$content}</{$tag}>" : "/>";
+        if (!$onlyOpen) {
+            $element .= !empty($content) ? ">{$content}</{$tag}>" : "/>";
+        } else {
+            $element .= ">";
+        }
         return trim($element);
+    }
+
+    public static function link($path, $rel = "stylesheet") {
+        return static::element('link', '', ['rel' => $rel, 'href' => Helpers::getUrl($path)]);
+    }
+
+    public static function inputField($name, $value = '', $class = '', $type = 'text', $required = true) {
+        return static::element('input', '', [
+            'type' => $type,
+            'value' => $value,
+            'class' => $class,
+            'name' => $name,
+            'id' => $name,
+            'required' => $required
+        ]);
+    }
+
+    public static function checkbox($name, $value, $checked = false) {
+        return static::element('input', '', [
+            'type' => 'checkbox',
+            'value' => $value,
+            'name' => $name,
+            'id' => $name,
+            'checked' => $checked
+        ]);
+    }
+
+    public static function openForm($action, $method = "post") {
+        return static::element('form', '', ['action' => Helpers::getUrl($action), 'method' => $method], true);
     }
 }

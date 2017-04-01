@@ -16,7 +16,7 @@ use framework\exceptions\setup\RequiredEnvVariableMissingException;
 
 class Setup {
     /**
-     * acts as a facade for all other model factories
+     * acts as a facade for all other startup tasks
      * Includes framework files
      * Loads env files
      * connects to database
