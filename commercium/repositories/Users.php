@@ -43,6 +43,20 @@ class Users extends Repository {
     }
 
     /**
+     * Update a user in the database
+     * @param User $user
+     */
+    public static function update(User &$user) {
+        Core::getInstance()->database->prepare('update ' . static::getTable() . ' set `firstname` = :firstname, `lastname` = :lastname, `email` = :email, `password` = :password  where  ' . static::getPrimaryKey() . ' = :id')->execute([
+            'id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'email' => $user->email,
+            'password' => $user->password
+        ]);
+    }
+
+    /**
      * Detaches all groups for an user and attach a set of particular groups
      * @param $userId
      * @param array $groups ids of roles
