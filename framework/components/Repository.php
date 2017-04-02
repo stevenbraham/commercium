@@ -20,9 +20,7 @@ use framework\traits\CanAccessCore;
  * @package framework\components
  */
 abstract class Repository implements \framework\contracts\Repository {
-    /**
-     * @return object[]
-     */
+
     public static function all() {
         //prepare and execute statement
         $query = Core::getInstance()->database->prepare("select * from " . static::getTable());
@@ -35,12 +33,6 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return string
      */
     public static abstract function getTable();
-
-    /**
-     * The model class used to display data
-     * @return string
-     */
-    public static abstract function getModel();
 
     /**
      * @param $id
@@ -78,14 +70,13 @@ abstract class Repository implements \framework\contracts\Repository {
         return "id";
     }
 
-    /**
-     * @param $name
-     * @param $value
-     * @return object[]
-     */
     public static function findAllByAttribute($name, $value) {
         $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
         $statement->execute(['value' => $value]);
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
+    }
+
+    public static function deleteById($id) {
+        Core::getInstance()->database->prepare('delete from ' . static::getTable() . ' where  ' . static::getPrimaryKey() . ' = :id')->execute(['id' => $id]);
     }
 }

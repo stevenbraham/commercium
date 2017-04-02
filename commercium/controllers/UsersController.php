@@ -45,6 +45,18 @@ class UsersController extends Controller {
         return $this->redirectTo('users');
     }
 
+    public function actionSave() {
+
+    }
+
+    public function actionDelete() {
+        $this->roleCheck("admins");
+        $userId = Helpers::getInputParameter("id", "post");
+        Groups::detachAllFromUser($userId);
+        Users::deleteById($userId);
+        return $this->redirectTo('users');
+    }
+
 
     public function actionView() {
         $user = Users::findOrFail(Helpers::getInputParameter('id'));

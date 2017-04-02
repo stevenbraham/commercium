@@ -7,11 +7,15 @@ namespace framework\contracts;
  */
 interface Repository {
     /**
-     * @return array
+     * @return Object[]
      */
     public static function all();
 
-    public static function findByAttribute($name, $value);
+    /**
+     * The model class used to display data
+     * @return string
+     */
+    public static function getModel();
 
     /**
      * Finds an object by the primary key
@@ -27,4 +31,25 @@ interface Repository {
      * @return mixed
      */
     public static function findOrFail($id);
+
+    /**
+     * Deletes a single entity for the database
+     * @param $id
+     * @return void
+     */
+    public static function deleteById($id);
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @return object|null
+     */
+    public static function findByAttribute($name, $value);
+
+    /**
+     * @param $name
+     * @param $value
+     * @return object[]
+     */
+    public static function findAllByAttribute($name, $value);
 }
