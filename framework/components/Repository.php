@@ -21,11 +21,17 @@ use framework\traits\CanAccessCore;
  */
 abstract class Repository implements \framework\contracts\Repository {
 
-    public static function all() {
+    public static function all($orderBy = "primaryKey", $order = "ASC", $limit = -1) {
         //prepare and execute statement
-        $query = Core::getInstance()->database->prepare("select * from " . static::getTable());
-        $query->execute();
-        return $query->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
+        $query = "select * from " . static::getTable() . " order by ";
+        $query .= " " . ($orderBy == "primaryKey" ? static::getPrimaryKeyAttribute() : $orderBy) . " ";
+        $query .= $order . " ";
+        if ($limit != -1) {
+            $query . "LIMIT " . $limit;
+        }
+        $statement = Core::getInstance()->database->prepare(trim($query));
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
     }
 
     //the reason these two are functions, because PHP doesn't support static abstract attributes
@@ -35,6 +41,12 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return string
      */
     public static abstract function getTable();
+
+    /**
+     * returns the name of the column holding the primary key
+     * @return string
+     */
+    public static abstract function getPrimaryKeyAttribute();
 
     /**
      * @param $id
@@ -63,12 +75,6 @@ abstract class Repository implements \framework\contracts\Repository {
         $query->execute(['value' => $value]);
         return $query->fetchObject(static::getModel());
     }
-
-    /**
-     * returns the name of the column holding the primary key
-     * @return string
-     */
-    public static abstract function getPrimaryKeyAttribute();
 
     public static function findAllByAttribute($name, $value) {
         $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");

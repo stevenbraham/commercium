@@ -7,9 +7,12 @@ namespace framework\contracts;
  */
 interface Repository {
     /**
+     * @param string $orderBy
+     * @param string $order ASC/DESC
+     * @param int $limit -1 means no limit
      * @return Object[]
      */
-    public static function all();
+    public static function all($orderBy = "primaryKey", $order = "ASC", $limit = -1);
 
     /**
      * The model class used to display data

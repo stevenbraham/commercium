@@ -38,7 +38,7 @@ use framework\components\base\SessionManagement;
                     <ul class="nav navbar-nav">
                         <li><?= Html::a("/", "Home") ?></li>
                         <li><?= Html::a("portfolio", "Portfolio") ?></li>
-                        <li><?= Html::a("orders", "Orders") ?></li>
+                        <li><?= Html::a("transactions", "Transactions") ?></li>
                         <li class="active"><?= Html::a("users", "User managament") ?></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
