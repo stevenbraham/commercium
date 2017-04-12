@@ -22,7 +22,8 @@ class Helpers {
         http_response_code($httpCode);
         $layoutParams = [
             'language' => 'en',
-            'title' => $httpCode
+            'title' => $httpCode,
+            'scripts' => []
         ];
         require_once FRAMEWORK_BASE_PATH . 'commercium/views/layout/header.php';
         echo "<div class='col-md-6 col-md-offset-3 text-center'><h2>{$message}</h2>" . Html::a('', 'Home', 'btn btn-lg btn-info btn-block') . "</div>";

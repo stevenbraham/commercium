@@ -26,6 +26,7 @@ abstract class Controller {
         'title' => '',
         'language' => 'en',
         'breadcrumbs' => [],
+        'scripts' => []
     ];
 
     /**
