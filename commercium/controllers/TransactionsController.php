@@ -25,6 +25,12 @@ class TransactionsController extends Controller {
     public function actionIndex() {
         $this->roleCheck("buyers");
         $this->layoutParams['title'] = "Transactions";
-        return $this->render("index", ['transactions' => Transactions::all('timestamp', 'DESC')]);
+        /**
+         * because a lot of data has to be retrieved from other tables,
+         * it is more efficient to use a custom sql query with a join and select.
+         * Otherwise the transaction object has to do select the other objects during the foreach loop
+         * which can result in a lot of overhead
+         */
+        return $this->render("index", ['transactions' => Transactions::getQuickOverview()]);
     }
 }

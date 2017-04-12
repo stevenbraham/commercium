@@ -33,4 +33,12 @@ class Transaction extends Model {
     public function getUser() {
         return Users::findById($this->user_id);
     }
+
+    /**
+     * Retrieves the company who's stocks were traded
+     * @return User
+     */
+    public function getCompany() {
+
+    }
 }

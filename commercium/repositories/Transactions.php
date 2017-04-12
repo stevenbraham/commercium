@@ -9,6 +9,7 @@
 namespace commercium\repositories;
 
 
+use commercium\controllers\TransactionsController;
 use commercium\models\Transaction;
 use framework\components\base\Core;
 use framework\components\Repository;
@@ -57,5 +58,20 @@ class Transactions extends Repository {
         $statement = Core::getInstance()->database->prepare("select -sum((mutation_price*mutation_amount)) as profit from " . static::getTable());
         $statement->execute();
         return (double)$statement->fetchColumn(0);
+    }
+
+    /**
+     * Specialized function for the transactions controller
+     * @see TransactionsController::actionIndex()
+     */
+    public static function getQuickOverview() {
+        $query = 'SELECT t.transaction_id, t.user_id, t.company_id, t.mutation_amount,t.mutation_price, (t.mutation_amount * t.mutation_price) as total_value, c.company_name, concat(u.firstname, " ",u.lastname) as user_name, t.timestamp' .
+            ' FROM transactions t' .
+            ' JOIN companies c ON t.company_id = c.' . Companies::getPrimaryKeyAttribute() .
+            ' JOIN users u ON t.user_id = u.' . Users::getPrimaryKeyAttribute() .
+            ' ORDER BY t.timestamp desc';
+        $statement = Core::getInstance()->database->prepare(trim($query));
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

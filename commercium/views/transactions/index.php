@@ -4,7 +4,6 @@
  * User: stevenbraham
  * Date: 12-04-17
  * Time: 19:38
- * @var \commercium\models\Transaction[] $transactions
  */
 use framework\components\base\Html;
 
@@ -26,35 +25,30 @@ use framework\components\base\Html;
             </thead>
             <tbody>
             <?php
-            foreach ($transactions as $transaction) {
+            foreach ($transactions as $row) {
                 ?>
                 <tr>
                     <td class="text-center">
-                        <?= Html::a('transactions/view?id=' . $transaction->getPrimaryKey(), '<i class="fa fa-eye"></i>', 'btn btn-info btn-xs') ?>
+                        <?= Html::a('transactions/view?id=' . $row['transaction_id'], '<i class="fa fa-eye"></i>', 'btn btn-info btn-xs') ?>
                     </td>
                     <td>
-                        <?php
-                        $user = $transaction->getUser();
-                        if (!empty($user)) {
-                            echo Html::a("users/edit?id=" . $user->getPrimaryKey(), $user->firstname . " " . $user->lastname);
-                        }
-                        ?>
+                        <?= Html::a("users/edit?id=" . $row['user_id'], $row['user_name']) ?>
                     </td>
                     <td>
-                        <?= $transaction->company_id ?>
+                        <?= Html::a("companies/edit?id=" . $row['company_id'], $row['company_name']) ?>
                     </td>
-                    <?= $transaction->getTransactionValue() > 0 ? Html::element("td", 'Buy', ['class' => 'text-white label-danger']) : Html::element("td", 'Sale', ['class' => 'text-white label-success']) ?>
+                    <?= $row['total_value'] > 0 ? Html::element("td", 'Buy', ['class' => 'text-white label-danger']) : Html::element("td", 'Sale', ['class' => 'text-white label-success']) ?>
                     <td>
-                        <?= abs($transaction->mutation_amount) ?>
-                    </td>
-                    <td>
-                        $<?= number_format($transaction->mutation_price, 2) ?>
+                        <?= abs($row['mutation_amount']) ?>
                     </td>
                     <td>
-                        <?= $transaction->getTransactionValue() > 0 ? Html::element("span", "$" . number_format($transaction->getTransactionValue(), 2), ['class' => 'text-danger']) : Html::element("span", "$" . number_format(-$transaction->getTransactionValue(), 2), ['class' => 'text-success']) ?>
+                        $<?= number_format($row['mutation_price'], 2) ?>
                     </td>
                     <td>
-                        <?= $transaction->timestamp ?>
+                        <?= $row['total_value'] > 0 ? Html::element("span", "$" . number_format($row['total_value'], 2), ['class' => 'text-danger']) : Html::element("span", "$" . number_format(-$row['total_value'], 2), ['class' => 'text-success']) ?>
+                    </td>
+                    <td>
+                        <?= $row['timestamp'] ?>
                     </td>
                 </tr>
                 <?php
