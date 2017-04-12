@@ -28,6 +28,6 @@ class MainController extends Controller {
      * Display profit charts
      */
     public function action_chart() {
-        echo json_encode(Transactions::getProfitsPerDay(date("Y-m-d", strtotime("-7 days")), date("Y-m-d", strtotime("-1 days"))));
+        echo json_encode(Transactions::getProfitsPerDay(date("Y-m-d", strtotime("-7 days")), date("Y-m-d")));
     }
 }
