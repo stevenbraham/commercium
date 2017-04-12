@@ -77,4 +77,13 @@ class Helpers {
     public static function getUrl($path, $absolute = false) {
         return $absolute ? FRAMEWORK_BASE_URL . $path : str_replace("//" . $_SERVER['HTTP_HOST'], "", FRAMEWORK_BASE_URL) . $path;
     }
+
+    /**
+     * Debug function for quickly viewing variable values
+     * @param mixed $variable
+     */
+    public static function dumpAndDie($variable) {
+        var_dump($variable);
+        die;
+    }
 }

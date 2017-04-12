@@ -44,7 +44,7 @@ use framework\components\base\SessionManagement;
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <?= Html::openForm('login/logout') ?>
-                            <?= Html::a('users/view?id=' . SessionManagement::getUser()->getPrimaryKey(), SessionManagement::getUser()->firstname, 'btn btn-info navbar-btn') ?>
+                            <?= Html::a('users/edit?id=' . SessionManagement::getUser()->getPrimaryKey(), SessionManagement::getUser()->firstname, 'btn btn-info navbar-btn') ?>
                             <button type="submit" class="btn btn-danger navbar-btn"><i class="fa fa-power-off"></i> Logout</button>
                             </form>
                         </li>

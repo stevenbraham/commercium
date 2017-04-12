@@ -30,7 +30,7 @@ use framework\components\base\Html;
                 ?>
                 <tr>
                     <td class="text-center">
-                        <?= Html::a('users/view?id=' . $user->getPrimaryKey(), '<i class="fa fa-pencil"></i>', 'btn btn-info btn-xs') ?>
+                        <?= Html::a('users/edit?id=' . $user->getPrimaryKey(), '<i class="fa fa-pencil"></i>', 'btn btn-info btn-xs') ?>
                     </td>
                     <td><?= $user->firstname ?></td>
                     <td><?= $user->lastname ?></td>

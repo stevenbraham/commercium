@@ -53,7 +53,7 @@ class UsersController extends Controller {
         //only set new password if one is provided
         $newPassword = Helpers::getInputParameter('newPassword', 'post');
         if (!empty($newPassword)) {
-            $user->password = $newPassword;
+            $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
         }
         //only admins can edit sensitive data
         if (SessionManagement::getUser()->isMemberOfGroup("admins")) {
@@ -61,7 +61,7 @@ class UsersController extends Controller {
             Users::setGroups($user->getPrimaryKey(), $_POST['groups']);
         }
         Users::update($user);
-        return $this->redirectTo('users');
+        return $this->redirectTo('main');
     }
 
     /**
@@ -69,7 +69,7 @@ class UsersController extends Controller {
      * @param $userId
      */
     private function cabapilitiesCheck($userId) {
-        if (!$userId == SessionManagement::getUser()->getPrimaryKey() || !SessionManagement::getUser()->isMemberOfGroup('admins')) {
+        if ($userId != SessionManagement::getUser()->getPrimaryKey() && !SessionManagement::getUser()->isMemberOfGroup('admins')) {
             Helpers::throwHttpError(403, "You can only edit your own profile");
         }
     }
@@ -82,10 +82,10 @@ class UsersController extends Controller {
         return $this->redirectTo('users');
     }
 
-    public function actionView() {
+    public function actionEdit() {
         $user = Users::findOrFail(Helpers::getInputParameter('id'));
         $this->cabapilitiesCheck($user->getPrimaryKey());
         $this->layoutParams['title'] = "Edit: " . $user->email;
-        return $this->render('view', ['user' => $user, 'groups' => Groups::all()]);
+        return $this->render('edit', ['user' => $user, 'groups' => Groups::all()]);
     }
 }
