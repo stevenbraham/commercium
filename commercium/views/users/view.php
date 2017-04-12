@@ -14,7 +14,7 @@ use framework\components\base\Html;
         <input type="submit" class="btn btn-success" value="Save"/>
         </form>
         <hr/>
-        <?= Html::openForm("users/delete") . Html::inputField("id", $user->id, '', 'hidden') ?>
+        <?= Html::openForm("users/delete") . Html::inputField("id", $user->getPrimaryKey(), '', 'hidden') ?>
         <div class="form-group">
             <input type="checkbox" required id="confirm-delete"/> <label for="confirm-delete">Confirm delete</label>
         </div>

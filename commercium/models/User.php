@@ -13,7 +13,10 @@ use commercium\repositories\Groups;
 use framework\components\Model;
 
 class User extends Model {
-    public $firstname, $lastname, $password, $email;
+
+    public static $primaryKeyAttribute = "user_id";
+
+    public $user_id, $firstname, $lastname, $password, $email;
 
     //general attributes
     /**
@@ -42,7 +45,7 @@ class User extends Model {
     public function getGroups() {
         if (empty($this->groups)) {
             //fill groups array
-            $this->groups = Groups::findAllByUserId($this->id);
+            $this->groups = Groups::findAllByUserId($this->getPrimaryKey());
         }
         return $this->groups;
     }

@@ -17,8 +17,13 @@ use framework\components\Repository;
  * @package commercium\repositories
  */
 class Groups extends Repository {
+
     public static function getModel() {
         return Group::class;
+    }
+
+    public static function getPrimaryKeyAttribute() {
+        return "group_id";
     }
 
     /**
@@ -35,7 +40,7 @@ class Groups extends Repository {
      * @return Group[]
      */
     public static function findAllByUserId($userId) {
-        $query = 'select g.* from ' . static::getTable() . ' g join users_groups ug on ug.group_id = g.id where ug.user_id = :user_id';
+        $query = 'select g.* from ' . static::getTable() . ' g join users_groups ug on ug.group_id = g.' . Group::$primaryKeyAttribute . ' where ug.user_id = :user_id';
         $statement = Core::getInstance()->database->prepare($query);
         $statement->execute(['user_id' => $userId]);
         return $statement->fetchAll(\PDO::FETCH_CLASS, Group::class); //convert result to group array

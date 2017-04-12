@@ -11,7 +11,11 @@ namespace framework\components;
 
 abstract class Model {
 
-    public $id;
+    /**
+     * The name of the column that holds the primary key
+     * @var string
+     */
+    public static $primaryKeyAttribute = "id";
 
     /**
      * Provides a factory like interface for creating objects of this particular modal
@@ -26,6 +30,14 @@ abstract class Model {
             }
         }
         return $object;
+    }
+
+    /**
+     * Returns the value of the primary of the object
+     * @return string
+     */
+    public function getPrimaryKey() {
+        return $this->{static::$primaryKeyAttribute};
     }
 
     /**

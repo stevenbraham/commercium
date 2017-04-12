@@ -40,7 +40,7 @@ class SessionManagement {
     public static function tryLogin(User $user, $password) {
         if (password_verify($password, $user->password)) {
             //register user in session
-            $_SESSION['user'] = $user->id;
+            $_SESSION['user'] = $user->getPrimaryKey();
             $_SESSION['loggedIn'] = true;
             return true;
         }

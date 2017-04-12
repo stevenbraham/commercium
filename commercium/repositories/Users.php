@@ -18,6 +18,7 @@ use framework\components\Repository;
  * @package commercium\repositories
  */
 class Users extends Repository {
+
     public static function getModel() {
         return User::class;
     }
@@ -47,13 +48,17 @@ class Users extends Repository {
      * @param User $user
      */
     public static function update(User &$user) {
-        Core::getInstance()->database->prepare('update ' . static::getTable() . ' set `firstname` = :firstname, `lastname` = :lastname, `email` = :email, `password` = :password  where  ' . static::getPrimaryKey() . ' = :id')->execute([
-            'id' => $user->id,
+        Core::getInstance()->database->prepare('update ' . static::getTable() . ' set `firstname` = :firstname, `lastname` = :lastname, `email` = :email, `password` = :password  where  ' . static::getPrimaryKeyAttribute() . ' = :id')->execute([
+            'id' => $user->getPrimaryKey(),
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
             'email' => $user->email,
             'password' => $user->password
         ]);
+    }
+
+    public static function getPrimaryKeyAttribute() {
+        return "user_id";
     }
 
     /**

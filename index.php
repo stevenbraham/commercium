@@ -5,8 +5,8 @@
  * Date: 27-03-17
  * Time: 13:14
  */
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 use framework\components\base\Router;
 use framework\Setup;

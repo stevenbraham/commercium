@@ -1,7 +1,7 @@
 <?php
 use framework\components\base\Html;
 
-echo Html::inputField('id', $user->id, '', 'hidden');
+echo Html::inputField('id', $user->getPrimaryKey(), '', 'hidden');
 ?>
 <div class="form-group">
     <label for="firstname">First name:</label>
@@ -29,7 +29,7 @@ if (\framework\components\base\SessionManagement::getUser()->isMemberOfGroup("ad
             ?>
             <div class="checkbox">
                 <label>
-                    <?= Html::checkbox('groups[]', $group->id, ($user->isMemberOfGroup($group->slug) || $group->slug = "users")) . ' ' . $group->name ?>
+                    <?= Html::checkbox('groups[]', $group->getPrimaryKey(), ($user->isMemberOfGroup($group->slug))) . ' ' . $group->name ?>
                 </label>
             </div>
             <?php

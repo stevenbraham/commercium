@@ -12,5 +12,8 @@ namespace commercium\models;
 use framework\components\Model;
 
 class Group extends Model {
-    public $name, $slug;
+
+    public static $primaryKeyAttribute = "group_id";
+
+    public $group_id, $name, $slug;
 }

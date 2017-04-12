@@ -41,12 +41,12 @@ class UsersController extends Controller {
             password_hash(Helpers::getInputParameter('password', 'post'), PASSWORD_BCRYPT)
         );
         //set groups
-        Users::setGroups($user->id, $_POST['groups']);
+        Users::setGroups($user->getPrimaryKey(), $_POST['groups']);
         return $this->redirectTo('users');
     }
 
     public function actionSave() {
-        $this->cabapilitiesCheck(SessionManagement::getUser()->id);
+        $this->cabapilitiesCheck(SessionManagement::getUser()->getPrimaryKey());
         $user = Users::findOrFail(Helpers::getInputParameter('id', 'post'));
         $user->firstname = Helpers::getInputParameter('firstname', 'post');
         $user->lastname = Helpers::getInputParameter('lastname', 'post');
@@ -58,7 +58,7 @@ class UsersController extends Controller {
         //only admins can edit sensitive data
         if (SessionManagement::getUser()->isMemberOfGroup("admins")) {
             $user->email = Helpers::getInputParameter('email', 'post');
-            Users::setGroups($user->id, $_POST['groups']);
+            Users::setGroups($user->getPrimaryKey(), $_POST['groups']);
         }
         Users::update($user);
         return $this->redirectTo('users');
@@ -69,7 +69,7 @@ class UsersController extends Controller {
      * @param $userId
      */
     private function cabapilitiesCheck($userId) {
-        if (!$userId == SessionManagement::getUser()->id || !SessionManagement::getUser()->isMemberOfGroup('admins')) {
+        if (!$userId == SessionManagement::getUser()->getPrimaryKey() || !SessionManagement::getUser()->isMemberOfGroup('admins')) {
             Helpers::throwHttpError(403, "You can only edit your own profile");
         }
     }
@@ -84,7 +84,7 @@ class UsersController extends Controller {
 
     public function actionView() {
         $user = Users::findOrFail(Helpers::getInputParameter('id'));
-        $this->cabapilitiesCheck($user->id);
+        $this->cabapilitiesCheck($user->getPrimaryKey());
         $this->layoutParams['title'] = "Edit: " . $user->email;
         return $this->render('view', ['user' => $user, 'groups' => Groups::all()]);
     }

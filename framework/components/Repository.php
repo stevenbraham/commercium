@@ -28,6 +28,8 @@ abstract class Repository implements \framework\contracts\Repository {
         return $query->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
     }
 
+    //the reason these two are functions, because PHP doesn't support static abstract attributes
+
     /**
      * The table were this instance is stored
      * @return string
@@ -48,7 +50,7 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return object|null
      */
     public static function findById($id) {
-        return static::findByAttribute(static::getPrimaryKey(), $id);
+        return static::findByAttribute(static::getPrimaryKeyAttribute(), $id);
     }
 
     /**
@@ -63,12 +65,10 @@ abstract class Repository implements \framework\contracts\Repository {
     }
 
     /**
-     * Primary key used for the table
+     * returns the name of the column holding the primary key
      * @return string
      */
-    protected static function getPrimaryKey() {
-        return "id";
-    }
+    public static abstract function getPrimaryKeyAttribute();
 
     public static function findAllByAttribute($name, $value) {
         $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
@@ -77,6 +77,6 @@ abstract class Repository implements \framework\contracts\Repository {
     }
 
     public static function deleteById($id) {
-        Core::getInstance()->database->prepare('delete from ' . static::getTable() . ' where  ' . static::getPrimaryKey() . ' = :id')->execute(['id' => $id]);
+        Core::getInstance()->database->prepare('delete from ' . static::getTable() . ' where  ' . static::getPrimaryKeyAttribute() . ' = :id')->execute(['id' => $id]);
     }
 }
