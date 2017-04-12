@@ -21,7 +21,10 @@ class MainController extends Controller {
     public function actionIndex() {
         $this->layoutParams['title'] = "Main";
         $this->layoutParams['scripts'][] = Helpers::getUrl("assets/js/main-index.js");
-        return $this->render("index", ['user' => SessionManagement::getUser()]);
+        return $this->render("index", [
+            'user' => SessionManagement::getUser(),
+            'profit' => Transactions::getTotalProfit()
+        ]);
     }
 
     /**

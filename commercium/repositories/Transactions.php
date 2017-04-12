@@ -54,6 +54,8 @@ class Transactions extends Repository {
      * @return double
      */
     public static function getTotalProfit() {
-        return Core::getInstance()->database->prepare()->fetchColumn("");
+        $statement = Core::getInstance()->database->prepare("select -sum((mutation_price*mutation_amount)) as profit from " . static::getTable());
+        $statement->execute();
+        return (double)$statement->fetchColumn(0);
     }
 }
