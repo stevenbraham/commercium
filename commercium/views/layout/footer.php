@@ -1,5 +1,5 @@
 </main>
-<footer class="navbar navbar-default navbar-static-bottom">
+<footer class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="https://braham.biz" target="_blank">&copy;2017 Steven Braham</a>
