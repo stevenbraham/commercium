@@ -32,10 +32,10 @@ use framework\components\base\Html;
                         <?= Html::a('transactions/view?id=' . $row['transaction_id'], '<i class="fa fa-eye"></i>', 'btn btn-info btn-xs') ?>
                     </td>
                     <td>
-                        <?= Html::a("users/edit?id=" . $row['user_id'], $row['user_name']) ?>
+                        <?= $row['user_name'] ?>
                     </td>
                     <td>
-                        <?= Html::a("companies/edit?id=" . $row['company_id'], $row['company_name']) ?>
+                        <?= Html::a("companies/view?id=" . $row['company_id'], $row['company_name']) ?>
                     </td>
                     <?= $row['total_value'] > 0 ? Html::element("td", 'Buy', ['class' => 'text-white label-danger']) : Html::element("td", 'Sale', ['class' => 'text-white label-success']) ?>
                     <td>

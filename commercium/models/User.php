@@ -49,4 +49,11 @@ class User extends Model {
         }
         return $this->groups;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName() {
+        return trim($this->firstname . " " . $this->lastname);
+    }
 }

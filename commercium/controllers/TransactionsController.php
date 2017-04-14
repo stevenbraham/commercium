@@ -10,6 +10,7 @@ namespace commercium\controllers;
 
 
 use commercium\repositories\Transactions;
+use framework\components\base\Helpers;
 use framework\components\Controller;
 use framework\traits\IsLoginProtected;
 use framework\traits\IsRoleBasedProtected;
@@ -32,5 +33,11 @@ class TransactionsController extends Controller {
          * which can result in a lot of overhead
          */
         return $this->render("index", ['transactions' => Transactions::getQuickOverview()]);
+    }
+
+    public function actionView() {
+        $id = Helpers::getInputParameter("id");
+        $this->layoutParams['title'] = "Transaction #" . $id;
+        return $this->render("view", ['transaction' => Transactions::findOrFail($id)]);
     }
 }

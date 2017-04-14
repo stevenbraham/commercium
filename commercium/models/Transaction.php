@@ -9,6 +9,7 @@
 namespace commercium\models;
 
 
+use commercium\repositories\Companies;
 use commercium\repositories\Users;
 use framework\components\Model;
 
@@ -36,9 +37,9 @@ class Transaction extends Model {
 
     /**
      * Retrieves the company who's stocks were traded
-     * @return User
+     * @return Company
      */
     public function getCompany() {
-
+        return Companies::findById($this->company_id);
     }
 }
