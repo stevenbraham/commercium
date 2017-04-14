@@ -24,6 +24,7 @@ class Companies extends Repository {
      * also returns a specialized sql query
      * @see Transactions::getQuickOverview()
      * @see CompaniesController::actionIndex()
+     * @return array
      */
     public static function getOverView() {
         $query = 'select c.company_id,c.company_name, e.exchange_name, sum(t.mutation_amount) as total_stocks' .
@@ -44,6 +45,31 @@ class Companies extends Repository {
 
     public static function getPrimaryKeyAttribute() {
         return "company_id";
+    }
+
+    /**
+     * @param string $stockSymbol
+     * @return Company
+     */
+    public static function findByStockSymbol($stockSymbol) {
+        return static::findByAttribute("stock_symbol", $stockSymbol);
+    }
+
+    /**
+     * @param $name
+     * @param $stockSymbol
+     * @param $exchangeId
+     * @return Company
+     */
+    public static function insert($name, $stockSymbol, $exchangeId) {
+        $query = "INSERT INTO `" . static::getTable() . "` (`company_name`,`stock_symbol`,`exchange_id`) VALUES (:name, :symbol, :exchange);";
+        $statement = Core::getInstance()->database->prepare($query);
+        $statement->execute([
+            'name' => $name,
+            'symbol' => $stockSymbol,
+            'exchange' => $exchangeId
+        ]);
+        return static::findOrFail(Core::getInstance()->database->lastInsertId());
     }
 
 }

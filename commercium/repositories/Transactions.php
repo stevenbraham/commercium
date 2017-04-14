@@ -74,4 +74,23 @@ class Transactions extends Repository {
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    /**
+     * @param $userId
+     * @param $companyId
+     * @param $pricePerStock
+     * @param $totalStocks
+     * @return Transaction
+     */
+    public static function insert($userId, $companyId, $pricePerStock, $totalStocks) {
+        $query = "INSERT INTO `" . static::getTable() . "` (`user_id`,`company_id`,`mutation_price`,`mutation_amount`) VALUES (:user, :company, :price, :amount);";
+        $statement = Core::getInstance()->database->prepare($query);
+        $statement->execute([
+            'user' => $userId,
+            'company' => $companyId,
+            'price' => $pricePerStock,
+            'amount' => $totalStocks
+        ]);
+        return static::findOrFail(Core::getInstance()->database->lastInsertId());
+    }
 }
