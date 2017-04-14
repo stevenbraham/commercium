@@ -6,7 +6,7 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
 
-    $.getJSON('_chart', function (data) {
+    $.getJSON('/php/main/_chart', function (data) {
         var chartData = new google.visualization.DataTable();
         chartData.addColumn('date', 'Datum');
         chartData.addColumn('number', 'Profits');

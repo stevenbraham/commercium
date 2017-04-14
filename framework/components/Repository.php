@@ -21,6 +21,12 @@ use framework\traits\CanAccessCore;
  */
 abstract class Repository implements \framework\contracts\Repository {
 
+    /**
+     * @param string $orderBy
+     * @param string $order
+     * @param int $limit
+     * @return Model[]
+     */
     public static function all($orderBy = "primaryKey", $order = "ASC", $limit = -1) {
         //prepare and execute statement
         $query = "select * from " . static::getTable() . " order by ";
@@ -50,7 +56,7 @@ abstract class Repository implements \framework\contracts\Repository {
 
     /**
      * @param $id
-     * @return object
+     * @return Model
      */
     public static function findOrFail($id) {
         $object = static::findById($id);
@@ -59,7 +65,7 @@ abstract class Repository implements \framework\contracts\Repository {
 
     /**
      * @param $id
-     * @return object|null
+     * @return Model|null
      */
     public static function findById($id) {
         return static::findByAttribute(static::getPrimaryKeyAttribute(), $id);
@@ -68,7 +74,7 @@ abstract class Repository implements \framework\contracts\Repository {
     /**
      * @param string $name
      * @param string $value
-     * @return object|null
+     * @return Model|null
      */
     public static function findByAttribute($name, $value) {
         $query = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value limit 1");
@@ -76,6 +82,11 @@ abstract class Repository implements \framework\contracts\Repository {
         return $query->fetchObject(static::getModel());
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return Model[]
+     */
     public static function findAllByAttribute($name, $value) {
         $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
         $statement->execute(['value' => $value]);

@@ -6,10 +6,17 @@
  * Time: 19:38
  */
 use framework\components\base\Html;
+use framework\components\base\SessionManagement;
 
 ?>
 <div class="row">
     <div class="col-md-12">
+        <?php
+        //only people with buying rights can set new transactions
+        if (SessionManagement::getUser()->isMemberOfGroup("buyers")) {
+            echo Html::a("transactions/new", "New transaction", 'btn btn-warning');
+        }
+        ?>
         <table class="table table-striped">
             <thead>
             <tr>
