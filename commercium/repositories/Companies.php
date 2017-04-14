@@ -31,6 +31,7 @@ class Companies extends Repository {
             ' join exchanges e on e.exchange_id = c.exchange_id' .
             ' join transactions t on t.company_id = c.company_id' .
             ' group by c.' . static::getPrimaryKeyAttribute() . ' ' .
+            ' having total_stocks > 0 ' .
             ' order by c.company_name ';
         $statement = Core::getInstance()->database->prepare(trim($query));
         $statement->execute();
