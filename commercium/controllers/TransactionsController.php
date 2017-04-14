@@ -24,7 +24,6 @@ class TransactionsController extends Controller {
     use IsRoleBasedProtected;
 
     public function actionIndex() {
-        $this->roleCheck("buyers");
         $this->layoutParams['title'] = "Transactions";
         /**
          * because a lot of data has to be retrieved from other tables,

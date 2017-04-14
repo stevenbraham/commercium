@@ -13,8 +13,8 @@ namespace framework\components\base;
  * @package framework\components\base
  */
 class Html {
-    public static function a($path, $label, $class = "") {
-        return static::element("a", $label, ['href' => Helpers::getUrl($path), 'class' => $class]);
+    public static function link($path, $rel = "stylesheet") {
+        return static::element('link', '', ['rel' => $rel, 'href' => Helpers::getUrl($path)]);
     }
 
     /**
@@ -40,10 +40,6 @@ class Html {
         return trim($element);
     }
 
-    public static function link($path, $rel = "stylesheet") {
-        return static::element('link', '', ['rel' => $rel, 'href' => Helpers::getUrl($path)]);
-    }
-
     public static function inputField($name, $value = '', $class = '', $type = 'text', $required = true) {
         return static::element('input', '', [
             'type' => $type,
@@ -67,5 +63,19 @@ class Html {
 
     public static function openForm($action, $method = "post") {
         return static::element('form', '', ['action' => Helpers::getUrl($action), 'method' => $method], true);
+    }
+
+    /**
+     * Returns a li item that gets active if the current controller is the path
+     * @param string $label
+     * @param string $controller
+     * @return string
+     */
+    public static function menuItem($label, $controller) {
+        return static::element('li', static::a($controller, $label), ['class' => (Router::currentController() == $controller ? "active" : "")]);
+    }
+
+    public static function a($path, $label, $class = "") {
+        return static::element("a", $label, ['href' => Helpers::getUrl($path), 'class' => $class]);
     }
 }

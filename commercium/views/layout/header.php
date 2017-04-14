@@ -36,10 +36,14 @@ use framework\components\base\SessionManagement;
             <?php if (SessionManagement::isLoggedIn()) { ?>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><?= Html::a("/", "Home") ?></li>
-                        <li><?= Html::a("portfolio", "Portfolio") ?></li>
-                        <li><?= Html::a("transactions", "Transactions") ?></li>
-                        <li class="active"><?= Html::a("users", "User managament") ?></li>
+                        <?= Html::menuItem("Main", "main"); ?>
+                        <?= Html::menuItem("Portfolio", "companies"); ?>
+                        <?= Html::menuItem("Transaction management", "transactions"); ?>
+                        <?php
+                        if (SessionManagement::getUser()->isMemberOfGroup("admins")) {
+                            echo Html::menuItem("User management", "users");
+                        }
+                        ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

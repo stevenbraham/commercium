@@ -34,4 +34,12 @@ class Router {
         Helpers::throwHttpError(404);
     }
 
+    /**
+     * Returns the name of the current route
+     * @return string
+     */
+    public static function currentController() {
+        return Helpers::getInputParameter('controller', 'get', 'home');
+    }
+
 }
