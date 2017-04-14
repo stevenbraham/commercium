@@ -38,7 +38,7 @@ class UsersController extends Controller {
             Helpers::getInputParameter('firstname', 'post'),
             Helpers::getInputParameter('lastname', 'post'),
             Helpers::getInputParameter('email', 'post'),
-            password_hash(Helpers::getInputParameter('password', 'post'), PASSWORD_BCRYPT)
+            password_hash(Helpers::getInputParameter('newPassword', 'post'), PASSWORD_BCRYPT)
         );
         //set groups
         Users::setGroups($user->getPrimaryKey(), $_POST['groups']);
