@@ -59,6 +59,7 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return Model
      */
     public static function findOrFail($id) {
+        //this is nearly the same als findById, but throws an 404 if the result is null
         $object = static::findById($id);
         return !empty($object) ? $object : Helpers::throwHttpError(404, "Cant find object");
     }
@@ -77,8 +78,10 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return Model|null
      */
     public static function findByAttribute($name, $value) {
+        //create our where statement
         $query = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value limit 1");
         $query->execute(['value' => $value]);
+        //convert result to our model
         return $query->fetchObject(static::getModel());
     }
 
@@ -88,6 +91,7 @@ abstract class Repository implements \framework\contracts\Repository {
      * @return Model[]
      */
     public static function findAllByAttribute($name, $value) {
+        //almost the same as FindByAttribute, but contains no limit and thus returns an array
         $statement = Core::getInstance()->database->prepare("select * from " . static::getTable() . " where " . $name . " = :value");
         $statement->execute(['value' => $value]);
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::getModel()); //convert results to desired model
