@@ -34,11 +34,18 @@ class UsersController extends Controller {
 
     public function actionStore() {
         $this->roleCheck('admins');
+        $firstname = Helpers::getInputParameter('firstname', 'post');
+        $lastname = Helpers::getInputParameter('lastname', 'post');
+        $email = Helpers::getInputParameter('email', 'post');
+        $password = Helpers::getInputParameter('newPassword', 'post');
+        if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
+            return Helpers::throwHttpError(400, "Make sure all input is correct");
+        }
         $user = Users::insert(
-            Helpers::getInputParameter('firstname', 'post'),
-            Helpers::getInputParameter('lastname', 'post'),
-            Helpers::getInputParameter('email', 'post'),
-            password_hash(Helpers::getInputParameter('newPassword', 'post'), PASSWORD_BCRYPT)
+            $firstname,
+            $lastname,
+            $email,
+            password_hash($password, PASSWORD_BCRYPT)
         );
         //set groups
         Users::setGroups($user->getPrimaryKey(), $_POST['groups']);
