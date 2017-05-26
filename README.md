@@ -12,6 +12,7 @@ I have tried to use several design patterns in my application:
 * Factory: The setup class creates a Core object and sets all important data. Also all models have a create functions.
 * Repository: all database access is seperated. All the controllers communnicate with the datbase with uniformed repository classes. The repository retrieves the data from the database and infuses models objects with the data. The controller doesn't know where the data comes from.
 
+Because it's a requirement from School, I have included one public page. The "about" page gives stats about how much trades have been done using this application.
 
 I have also developed my own routing system based on Yii. All controller classes have to end with controller and all methods should start with action. This prevents people from executing random classes. For example /users/new gets mapped to
 
@@ -24,4 +25,4 @@ class UsersController extends Controller{
 }
 ```
 
-For the most part my application followes the strcuture of any standard php MVC app. Most design choices are documented as PHPDoc or comments.
+For the most part my application follows the structure of any standard php MVC app. Most design choices are documented as PHPDoc or comments. If you have questions, send me a message on [Twitter](https://twitter.com/steven_braham).

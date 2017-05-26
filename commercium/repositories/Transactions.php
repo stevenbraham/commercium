@@ -15,10 +15,6 @@ use framework\components\base\Core;
 use framework\components\Repository;
 
 class Transactions extends Repository {
-    public static function getPrimaryKeyAttribute() {
-        return "transaction_id";
-    }
-
     public static function getModel() {
         return Transaction::class;
     }
@@ -92,5 +88,49 @@ class Transactions extends Repository {
             'amount' => $totalStocks
         ]);
         return static::findOrFail(Core::getInstance()->database->lastInsertId());
+    }
+
+    /**
+     * Counts all transactions in the database
+     * @return int
+     */
+    public static function getTotalTransactionCount() {
+        $query = "select count(" . static::getPrimaryKeyAttribute() . ") as count from `" . static::getTable() . "`;";
+        $statement = Core::getInstance()->database->prepare($query);
+        $statement->execute();
+        return intval($statement->fetchColumn());
+    }
+
+    public static function getPrimaryKeyAttribute() {
+        return "transaction_id";
+    }
+
+    /**
+     * Gets the sum of all transactions in the database
+     * @return float
+     */
+    public static function getTotalTransactionValue() {
+        $query = "select sum(abs(mutation_amount) * mutation_price)  from `" . static::getTable() . "`;";
+        $statement = Core::getInstance()->database->prepare($query);
+        $statement->execute();
+        return doubleval($statement->fetchColumn());
+    }
+
+    /**
+     * Custom dataview for about page
+     * @return array
+     */
+    public static function getAboutPageData() {
+        $query = "SELECT c.company_name," .
+            " sum(abs(mutation_amount) * mutation_price) as total_trade_value," .
+            " sum(case when t.mutation_amount > 0 then abs(t.mutation_amount) else NULL end) as stocks_bought," .
+            " sum(case when t.mutation_amount < 0 then abs(t.mutation_amount) else NULL end) as stocks_sold " .
+            " from " . static::getTable() . " t" .
+            " join companies c on c.company_id = t.company_id" .
+            " group by t.company_id" .
+            " order by c.company_name;";
+        $statement = Core::getInstance()->database->prepare(trim($query));
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

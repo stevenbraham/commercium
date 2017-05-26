@@ -33,8 +33,12 @@ use framework\components\base\SessionManagement;
                 </button>
                 <a class="navbar-brand" href="<?= Helpers::getUrl('') ?>">Commercium</a>
             </div>
-            <?php if (SessionManagement::isLoggedIn()) { ?>
-                <div id="navbar" class="collapse navbar-collapse">
+
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <?= Html::menuItem("About", "about"); ?>
+                </ul>
+                <?php if (SessionManagement::isLoggedIn()) { ?>
                     <ul class="nav navbar-nav">
                         <?= Html::menuItem("Main", "main"); ?>
                         <?= Html::menuItem("Portfolio", "companies"); ?>
@@ -54,8 +58,9 @@ use framework\components\base\SessionManagement;
                             </form>
                         </li>
                     </ul>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
+
         </div>
     </nav>
     <nav class="navbar navbar-default navbar-fixed-top" id="title-wrapper">
