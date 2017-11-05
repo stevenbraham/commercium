@@ -15,7 +15,7 @@ use framework\components\base\SessionManagement;
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Commercium: <?= $layoutParams['title'] ?></title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="//bootswatch.com/sandstone/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet"/>
     <?= Html::link('assets/css/style.css') ?>
     <?= Html::link('assets/images/favicon.png', 'icon') ?>
 </head>
